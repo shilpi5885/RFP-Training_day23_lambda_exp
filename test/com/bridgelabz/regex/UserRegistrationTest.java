@@ -1,104 +1,36 @@
 package com.bridgelabz.regex;
 
-import junit.framework.TestCase;
+import java.util.regex.Pattern;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class UserRegistrationTest extends TestCase {
-	private UserRegistration user;
-
-	@Before
-	public void UserRegistrationObj() {
-		user = new UserRegistration();
+public class UserRegistration {
+	public boolean validateFirstName(String fName) throws UserRegistrationException {
+		IFirstName userFirstName = (firstName, pattern) -> {
+			return Pattern.compile(pattern).matcher(firstName).matches() ? true : false;
+		};
+		return userFirstName.isValidateFirstName(fName, RegexConstants.FIRST_NAME_REGEX);
 	}
 
-	@Test
-	public void testFirstName_thenAssertionSucceeds() {
-		assertTrue(user.isValidateFirstName("Kalpesh"));
-		System.out.println("Valid First Name");
+	public boolean validateLastName(String lName) throws UserRegistrationException {
+		ILastName userLastName = (lastName, pattern) -> {
+			return Pattern.compile(pattern).matcher(lastName).matches() ? true : false;
+		};
+		return userLastName.isValidateLastName(lName, RegexConstants.LAST_NAME_REGEX);
 	}
 
-	@Test
-	public void testFirstName_thenAssertionFail() {
-		assertTrue(user.isValidateFirstName("bunny"));
-		System.out.println("Valid First Name");
+	public boolean validateEmail(String email) throws UserRegistrationException {
+		IEmail userEmail = (usrEmail, pattern) -> {
+			return Pattern.compile(pattern).matcher(usrEmail).matches() ? true : false;
+		};
+		return userEmail.isValidateEmail(email, RegexConstants.EMAIL_ID_REGEX);
 	}
 
-	@Test
-	public void testLastName_thenAssertionSucceeds() {
-		assertTrue(user.isValidateLastName("Mahajan"));
-		System.out.println("Valid Last Name");
+	public boolean validateMobileNumber(String mobileNumber) throws UserRegistrationException{
+			IMobile userMobile = (mobile,pattern) -> {return Pattern.compile(pattern).matcher(mobile).matches() ? true : false;};
+			return userMobile.isValidateMobile(mobileNumber, RegexConstants.MOBILE_NUMBER_REGEX);
 	}
 
-	@Test
-	public void testLastName_thenAssertionFail() {
-		assertTrue(user.isValidateLastName("devil"));
-		System.out.println("Valid Last Name");
-	}
-
-	@Test
-	public void testEmail_thenAssertionSucceeds() {
-		assertTrue(user.isValidateEmail("abc@gmail.com"));
-		System.out.println("Valid Email");
-	}
-
-	@Test
-	public void testEmail_thenAssertionFail() {
-		assertTrue(user.isValidateEmail("abc@gmail@.com@"));
-		System.out.println("Valid Email");
-	}
-
-	@Test
-	public void testMobileNumber_thenAssertionSucceeds() {
-		assertTrue(user.isValidateMobileNumber("9876543210"));
-		System.out.println("Valid Mobile Number");
-	}
-
-	@Test
-	public void testMobileNumber_thenAssertionFail() {
-		assertTrue(user.isValidateMobileNumber("91 0876543210"));
-		System.out.println("Valid Mobile Number");
-	}
-
-	@Test
-	public void testPassword_thenAssertionSucceeds() {
-		assertTrue(user.isValidatePassword("Abcd@1234"));
-		System.out.println("Valid Password");
-	}
-
-	@Test
-	public void testPassword_thenAssertionSucceeds1() {
-		assertTrue(user.isValidatePassword("Abcdefg@"));
-		System.out.println("Valid Password");
-	}
-
-	@Test
-	public void testPassword_thenAssertionSucceeds2() {
-		assertTrue(user.isValidatePassword("1221212234"));
-		System.out.println("Valid Password");
-	}
-
-	@Test
-	public void testPassword_thenAssertionSucceeds3() {
-		assertTrue(user.isValidatePassword("Ab@1234@@"));
-		System.out.println("Valid Password");
-	}
-
-	@Test
-	public void testPassword_thenAssertionFail() {
-		assertTrue(user.isValidatePassword("bbb"));
-		System.out.println("Valid Password");
-	}
-
-	@Test
-	public void whenUserRegistrationExceptionThrown_thenAssertionSucceeds() {
-		assertTrue(user.isValidatePassword("bbb"));
-	}
-
-	@After
-	public void nullObj() {
-		user = null;
+	public boolean validatePassword(String password) throws UserRegistrationException{
+			IPassword userPassword = (psswrd,pattern) -> {return Pattern.compile(pattern).matcher(psswrd).matches() ? true : false;};
+			return userPassword.isValidatePassword(password, RegexConstants.PASSWORD_REGEX);
 	}
 }
