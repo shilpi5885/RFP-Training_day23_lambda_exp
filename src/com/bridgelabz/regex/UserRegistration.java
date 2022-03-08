@@ -3,43 +3,34 @@ package com.bridgelabz.regex;
 import java.util.regex.Pattern;
 
 public class UserRegistration {
-
-	public boolean isValidateFirstName(String firstName) {
-		if (!validateRegex(firstName, RegexConstants.FIRST_NAME_REGEX))
-			return false;
-		else
-			return true;
+	public boolean validateFirstName(String fName) throws UserRegistrationException {
+		IFirstName userFirstName = (firstName, pattern) -> {
+			return Pattern.compile(pattern).matcher(firstName).matches() ? true : false;
+		};
+		return userFirstName.isValidateFirstName(fName, RegexConstants.FIRST_NAME_REGEX);
 	}
 
-	public boolean isValidateLastName(String lastName) {
-		if (!validateRegex(lastName, RegexConstants.LAST_NAME_REGEX))
-			return false;
-		else
-			return true;
+	public boolean validateLastName(String lName) throws UserRegistrationException {
+		ILastName userLastName = (lastName, pattern) -> {
+			return Pattern.compile(pattern).matcher(lastName).matches() ? true : false;
+		};
+		return userLastName.isValidateLastName(lName, RegexConstants.LAST_NAME_REGEX);
 	}
 
-	public boolean isValidateEmail(String email) {
-		if (!validateRegex(email, RegexConstants.EMAIL_ID_REGEX))
-			return false;
-		else
-			return true;
+	public boolean validateEmail(String email) throws UserRegistrationException {
+		IEmail userEmail = (usrEmail, pattern) -> {
+			return Pattern.compile(pattern).matcher(usrEmail).matches() ? true : false;
+		};
+		return userEmail.isValidateEmail(email, RegexConstants.EMAIL_ID_REGEX);
 	}
 
-	public boolean isValidateMobileNumber(String mobileNumber) {
-		if (!validateRegex(mobileNumber, RegexConstants.MOBILE_NUMBER_REGEX))
-			return false;
-		else
-			return true;
+	public boolean validateMobileNumber(String mobileNumber) throws UserRegistrationException{
+			IMobile userMobile = (mobile,pattern) -> {return Pattern.compile(pattern).matcher(mobile).matches() ? true : false;};
+			return userMobile.isValidateMobile(mobileNumber, RegexConstants.MOBILE_NUMBER_REGEX);
 	}
 
-	public boolean isValidatePassword(String password) {
-		if (!validateRegex(password, RegexConstants.PASSWORD_REGEX))
-			return false;
-		else
-			return true;
-	}
-
-	private boolean validateRegex(String request, String pattern) {
-		return Pattern.compile(pattern).matcher(request).matches() ? true : false;
+	public boolean validatePassword(String password) throws UserRegistrationException{
+			IPassword userPassword = (psswrd,pattern) -> {return Pattern.compile(pattern).matcher(psswrd).matches() ? true : false;};
+			return userPassword.isValidatePassword(password, RegexConstants.PASSWORD_REGEX);
 	}
 }
